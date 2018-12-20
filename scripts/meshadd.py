@@ -14,7 +14,7 @@ class AddMessh(Panel):
         self.layout.operator('mesh.primitive_circle_add', text='Add circle', icon='MESH_CIRCLE')
         self.layout.operator('mesh.primitive_plane_add', text='Add plane', icon='MESH_PLANE')
         self.layout.operator('mesh.primitive_uv_sphere_add', text='Add UV sphere', icon='MESH_UVSPHERE')
-       self.layout.operator('mesh.primitive_ico_sphere_add', text='Add icosphere', icon='MESH_ICOSPHERE')
+        self.layout.operator('mesh.primitive_ico_sphere_add', text='Add icosphere', icon='MESH_ICOSPHERE')
         self.layout.operator('mesh.primitive_cone_add', text='Add cone', icon='MESH_CONE')
         self.layout.operator('mesh.primitive_cylinder_add', text='Add cylinder', icon='MESH_CYLINDER')
         self.layout.operator('mesh.primitive_torus_add', text='Add torus', icon='MESH_TORUS')
