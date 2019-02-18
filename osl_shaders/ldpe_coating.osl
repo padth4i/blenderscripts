@@ -1,0 +1,12 @@
+#include "stdosl.h"
+#include "node_fresnel.h"
+
+shader ldpe_coating(
+ color Color = color(0.0, 1.0, 0.0),
+ float Fac = 0.5,
+ normal Normal = 0,
+ output closure color BSDF = 0) 
+{
+ float t = clamp(Fac, 0.0, 1.0);
+ BSDF = ((1.0 - t) * (color(1.0) * reflection(Normal))) + (t * (Color * diffuse(Normal)));
+ }
