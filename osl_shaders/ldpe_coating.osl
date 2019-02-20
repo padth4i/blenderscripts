@@ -8,7 +8,5 @@ shader ldpe_coating(
  output closure color BSDF = 0) 
 {
  float t = clamp(Fac, 0.0, 1.0);
- BSDF = ((1.0 - t) * (color(1, 1, 1) * reflection(Normal))) + (t * (Color * diffuse(Normal)));
+ BSDF = ((1.0 - t) * (color(1, 1, 1) * microfacet_ggx(Normal, 0.1))) + (t * (Color - color(0.2, 0 , 0.2)) * diffuse(Normal));
  }
-
-
