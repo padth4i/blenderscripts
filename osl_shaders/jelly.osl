@@ -1,0 +1,18 @@
+#include "stdosl.h"
+#include "node_fresnel.h"
+
+shader jelly(
+ color Color = color(1.0, 0, 0),
+ float Clearcoat = 1.0,
+ float ClearcoatRoughness = 0.03,
+ normal ClearcoatNormal = N,
+ output closure color BSDF = 0)
+ 
+{
+ float eta = backfacing() ? 0.689 : 1.45;
+ closure Clear = 0 + principled_clearcoat(ClearcoatNormal, Clearcoat, ClearcoatRoughness * ClearcoatRoughness);
+ closure Refraction = Color * microfacet_beckmann_refraction(Normal, 0, eta);
+ closure Transparent = Color * transparent();
+ closure C = (0.5 * Clear) + (0.5 * Refraction);
+ closure BSDF = (0.5 * C) + (0.5 * Transparent);
+ }
