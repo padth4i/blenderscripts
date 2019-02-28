@@ -6,8 +6,10 @@ shader jelly(
  output closure color BSDF = 0)
 {
  normal Normal = N;
- float Fresnel1 = fresnel_dielectric_cos(dot(I, Normal), (backfacing() ? 0.69 : 1.45));
- float Fresnel2 = fresnel_dielectric_cos(dot(I, Normal), (backfacing() ? 0.85 : 1.175));
+ float eta1 = backfacing() ? 0.69 : 1.45;
+ float eta2 = backfacing() ? 0.85 : 1.175;
+ float Fresnel1 = fresnel_dielectric_cos(dot(I, Normal), eta1);
+ float Fresnel2 = fresnel_dielectric_cos(dot(I, Normal), eta2);
  color ReflColor = Color + color(3.0, 2.0, 2.0);
  color White = color(1, 1, 1);
  closure color ClosureBright = 0.5 * White * reflection(Normal) + 0.5 * White * diffuse(Normal);
@@ -15,6 +17,6 @@ shader jelly(
  closure color BaseColor = 0.5 * Color * diffuse(Normal) + 0.5 * White * reflection(Normal);
  closure color Temp1 = (1.0-Fresnel1) * ClosureRefl + Fresnel1 * ClosureBright;
  closure color Temp2 = (1.0-Fresnel2) * BaseColor + Fresnel2 * Temp1;
- closure color TempTran = ReflColor * (Fresnel1 * reflection(Normal) + (1.0-Fresnel1) * refraction(Normal, (backfacing() ? 0.69 : 1.45)));
- BSDF = 0.9 * Temp2 + 0.1 * TempTran;
+ closure color TempRefl = ReflColor * (Fresnel1 * reflection(Normal) + (1.0-Fresnel1) * refraction(Normal, eta1));
+ BSDF = 0.9 * Temp2 + 0.1 * TempRefl;
  }
