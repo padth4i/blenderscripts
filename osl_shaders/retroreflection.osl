@@ -1,0 +1,18 @@
+shader retroreflection (
+	color c = (0, 0, 0);
+	float specrefl = 0.0f;
+	float IOR = 1.45f;
+	output closure color BSDF = 0;
+	)
+
+{
+closure color BRDF_mirror = 0;
+closure color BRDF_retro = 0;
+closure color BRDF_diffuse = 0;
+vector mirror_incident = 2 * dot(dot(-I, N), N) + I;
+vector R, T;
+fresnel(I, N, 1.0, Kr, Kt, R, T);
+if (I != mirror_incident) {
+	BSDF_mirror = c * specrefl * R * mirror_incident / fabs(dot(I, N));
+	}
+
